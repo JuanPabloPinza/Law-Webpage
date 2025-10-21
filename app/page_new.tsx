@@ -5,49 +5,15 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 export default function Home() {
-  const [selectedLawyer, setSelectedLawyer] = useState<{
-    name: string;
-    role: string;
-    specialty: string;
-    image: string;
-    imagePosition: string;
-    fullDescription: string;
-  } | null>(null)
-
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <header className="relative bg-gradient-to-br from-slate-50 to-stone-100 border-b border-slate-200 overflow-hidden">
+      <header className="relative bg-gradient-to-br from-slate-50 to-stone-100 border-b border-slate-200">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
           }}></div>
         </div>
-        
-        {/* Imagen de la Dama de Justicia a la izquierda */}
-        <div className="absolute left-24 lg:left-28 top-0 bottom-0 w-64 lg:w-80 hidden md:flex items-center justify-start opacity-35 pointer-events-none">
-          <Image
-            src="/dama-de-justicia.png"
-            alt="Dama de Justicia"
-            width={359}
-            height={800}
-            className="h-full w-auto object-contain"
-            priority
-          />
-        </div>
-
-        {/* Imagen de la Dama de Justicia a la derecha */}
-        <div className="absolute right-0 top-0 bottom-0 w-72 lg:w-96 hidden md:flex items-center justify-end opacity-35 pointer-events-none">
-          <Image
-            src="/dama-justicia-2.png"
-            alt="Dama de Justicia"
-            width={359}
-            height={800}
-            className="h-full w-auto object-contain"
-            priority
-          />
-        </div>
-
         <div className="container mx-auto px-4 py-20 relative">
           <div className="max-w-4xl mx-auto text-center">
             <div className="mb-8">
@@ -76,19 +42,13 @@ export default function Home() {
       <nav className="sticky top-0 z-50 bg-slate-800 shadow-lg">
         <div className="container mx-auto px-4">
           <ul className="flex flex-wrap justify-center">
-            {[
-              { label: 'Inicio', href: '#inicio' },
-              { label: 'Nosotros', href: '#nosotros' },
-              { label: 'Áreas de Práctica', href: '#servicios' },
-              { label: 'Equipo', href: '#equipo' },
-              { label: 'Contacto', href: '#contacto' }
-            ].map((item) => (
-              <li key={item.label}>
+            {['Inicio', 'Nosotros', 'Servicios', 'Áreas de Práctica', 'Contacto'].map((item) => (
+              <li key={item}>
                 <Link 
-                  href={item.href}
+                  href={`#${item.toLowerCase()}`}
                   className="block px-6 py-4 text-slate-100 hover:bg-slate-700 transition-colors duration-200 font-light tracking-wide"
                 >
-                  {item.label}
+                  {item}
                 </Link>
               </li>
             ))}
@@ -202,7 +162,6 @@ export default function Home() {
               <div key={index} className={`bg-slate-50 border-l-4 border-slate-700 p-6 hover:shadow-lg transition-shadow duration-300 relative overflow-hidden`}>
                 <div className="absolute right-0 top-0 opacity-10 pointer-events-none">
                   {index === 0 && (
-                    // Ácono de Derecho Civil: Documento/Contrato con pluma
                     <svg className="w-32 h-32 text-slate-700" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
                       <path d="M8 16h8v2H8zm0-3h8v1H8zm0-3h5v1H8z" opacity="0.7"/>
@@ -210,7 +169,6 @@ export default function Home() {
                     </svg>
                   )}
                   {index === 1 && (
-                    // Ácono de Derecho Penal: Martillo de juez con balanza
                     <svg className="w-32 h-32 text-slate-700" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm6 9.09c0 4-2.55 7.7-6 8.83-3.45-1.13-6-4.82-6-8.83V6.31l6-2.12 6 2.12v4.78z"/>
                       <path d="M10 8h4v2h-4zm-1 3h6v1H9zm1 2h4v1h-4z" opacity="0.6"/>
@@ -218,7 +176,6 @@ export default function Home() {
                     </svg>
                   )}
                   {index === 2 && (
-                    // Ácono de Derecho Constitucional: Edificio gubernamental/columnas
                     <svg className="w-32 h-32 text-slate-700" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 1L2 6v2h20V6l-10-5zM4 8v9H3v2h18v-2h-1V8H4zm2 9V8h2v9H6zm4 0V8h2v9h-2zm4 0V8h2v9h-2zm4 0V8h2v9h-2z"/>
                       <rect x="2" y="19" width="20" height="2" opacity="0.8"/>
@@ -235,92 +192,14 @@ export default function Home() {
       </section>
 
       {/* Team Carousel */}
-      <section id="equipo" className="py-20 bg-white">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-5xl font-serif text-slate-800 mb-4 text-center">
             Nuestro Equipo
           </h2>
           <div className="w-24 h-1 bg-slate-700 mx-auto mb-12"></div>
           
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  name: 'Dra. Joyce Jara',
-                  role: 'Socia',
-                  specialty: 'Especialista en Derecho Civil y Constitucional',
-                  image: '/dra-jara.webp',
-                  imagePosition: 'center 20%',
-                  shortDescription: 'Reconocida por su experiencia como litigante y su habilidad para combinar la técnica jurídica con una visión moderna del Derecho. Amplia experiencia en debate nacional e internacional.',
-                  fullDescription: 'La Dra. Joyce Jara cuenta con una trayectoria marcada por la excelencia, la ética y el compromiso con la justicia. Abogada graduada de la Pontificia Universidad Católica del Ecuador, se ha especializado en la resolución de asuntos civiles y constitucionales, destacándose por su sólida formación jurídica y su capacidad estratégica en litigación.\n\nReconocida por su experiencia como litigante y su habilidad para combinar la técnica jurídica con una visión moderna del Derecho, posee amplia experiencia en debate nacional e internacional y en el uso de herramientas digitales aplicadas a la práctica legal.\n\nSu ejercicio profesional se caracteriza por la precisión analítica, la proactividad y un profundo compromiso ético orientado al logro de resultados justos y eficaces.\n\n"¡Sé fuerte y valiente! ¡No tengas miedo ni te desanimes! Porque el Señor tu Dios te acompañará dondequiera que vayas." -Josué 1:9'
-                },
-                {
-                  name: 'Dr. Antonino Alarcón',
-                  role: 'Socio',
-                  specialty: 'Especialista en Derecho Penal y Constitucional',
-                  image: '/dr-alarcon.webp',
-                  imagePosition: 'center 65%',
-                  shortDescription: 'Profesional destacado por su profundo conocimiento y por sus estrategias de defensa innovadoras y meticulosas. Su práctica se ha consolidado en el litigio de alta complejidad.',
-                  fullDescription: 'El Dr. Antonino Alarcón, abogado graduado en la Pontificia Universidad Católica del Ecuador, cuenta con una larga trayectoria de especialización en asuntos penales y en temas constitucionales.\n\nProfesional destacado por su profundo conocimiento y por sus estrategias de defensas innovadoras y meticulosas. Su práctica se ha consolidado en el litigio de alta complejidad.\n\nSu principal compromiso es brindar un servicio de calidad donde preponderen sus principios éticos, la transparencia y un alto rigor técnico.\n\nEl conocimiento y la experiencia del Dr. Alarcón están al servicio y disposición de cada caso concreto, asegurando la mejor defensa técnica.'
-                },
-                {
-                  name: 'Dra. Ana Camila Saquicela',
-                  role: 'Socia',
-                  specialty: 'Especialista en Derecho Constitucional y Penal',
-                  image: '/dra-saquicela.jpg',
-                  imagePosition: 'center 45%',
-                  shortDescription: 'Abogada con visión humanista del Derecho, orientada hacia la protección de garantías constitucionales y administración de justicia penal.',
-                  fullDescription: 'La Dra. Ana Camila Saquicela se destaca por su sólida formación jurídica y su compromiso con la defensa de los derechos fundamentales. Abogada con una visión humanista del Derecho, ha orientado su carrera hacia la protección de las garantías constitucionales y la administración de justicia penal, actuando siempre con ética, firmeza y responsabilidad social.\n\n"La justicia no es un ideal lejano, sino el reflejo de nuestra determinación por hacer lo correcto."\n\nSu ejercicio profesional se distingue por la argumentación precisa, la sensibilidad ante las causas humanas y una profunda vocación de servicio. Cree en la justicia como un instrumento de transformación y equidad, buscando en cada caso no solo resolver conflictos, sino también restaurar la confianza en el Derecho.'
-                }
-              ].map((lawyer, index) => (
-                <div 
-                  key={index} 
-                  className="group relative bg-slate-800 overflow-hidden shadow-xl h-96 rounded-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] cursor-pointer"
-                  onClick={() => setSelectedLawyer(lawyer)}
-                >
-                  {/* Overlay gradient que se intensifica en hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-300 z-10"></div>
-                  
-                  <img
-                    alt={lawyer.name}
-                    src={lawyer.image}
-                    className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
-                    style={{ objectPosition: lawyer.imagePosition }}
-                  />
-                  
-                  <div className="relative p-6 h-full flex flex-col justify-end z-20">
-                    {/* Información visible por defecto */}
-                    <div className="transition-all duration-300 group-hover:opacity-0 group-hover:translate-y-4">
-                      <p className="text-xs font-medium tracking-widest text-slate-200 uppercase mb-2">
-                        {lawyer.specialty}
-                      </p>
-                      <p className="text-2xl font-serif font-bold text-white mb-1">
-                        {lawyer.name}
-                      </p>
-                      <p className="text-sm text-slate-200 font-light">
-                        {lawyer.role}
-                      </p>
-                    </div>
-                    
-                    {/* Descripción visible en hover */}
-                    <div className="absolute bottom-6 left-6 right-6 translate-y-8 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                      <div className="border-l-4 border-white/70 pl-4 pr-2">
-                        <p className="text-xs font-medium tracking-widest text-slate-300 uppercase mb-2">
-                          {lawyer.specialty}
-                        </p>
-                        <p className="text-xl font-serif font-bold text-white mb-3">
-                          {lawyer.name}
-                        </p>
-                        <p className="text-sm text-slate-200 leading-relaxed">
-                          {lawyer.shortDescription}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <TeamSection />
         </div>
       </section>
 
@@ -371,12 +250,7 @@ export default function Home() {
             </div>
 
             <div className="text-center">
-              <a 
-                href="https://wa.me/593996766136?text=Hola,%20me%20gustaría%20solicitar%20una%20consulta%20legal" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-white text-slate-800 px-8 py-3 font-semibold hover:bg-slate-100 transition-colors duration-200"
-              >
+              <a href="#contacto" className="inline-block bg-white text-slate-800 px-8 py-3 font-semibold hover:bg-slate-100 transition-colors duration-200">
                 Solicitar Consulta
               </a>
             </div>
@@ -391,56 +265,126 @@ export default function Home() {
           <p className="text-sm">Bufete de Abogados | Quito, Ecuador</p>
         </div>
       </footer>
+    </main>
+  )
+}
 
-      {/* Modal de descripción completa */}
-      {selectedLawyer && (
-        <div 
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 animate-fadeIn"
-          onClick={() => setSelectedLawyer(null)}
-        >
+// Componente del equipo con funcionalidad de click
+function TeamSection() {
+  const [expandedLawyer, setExpandedLawyer] = useState<number | null>(null)
+
+  const lawyers = [
+    {
+      name: 'Dra. Jara',
+      role: 'Socia',
+      specialty: 'Derecho Civil y Corporativo',
+      image: '/dra-jara.webp',
+      shortDescription: 'Más de 20 años de experiencia en litigios civiles y asesoría corporativa.',
+      fullDescription: 'Más de 20 años de experiencia en litigios civiles y asesoría corporativa. Especialista en derecho comercial y contratos complejos. Ha liderado importantes casos en el ámbito corporativo nacional e internacional.'
+    },
+    {
+      name: 'Dr. Alarcón',
+      role: 'Socio',
+      specialty: 'Derecho Laboral y Administrativo',
+      image: '/dr-alarcon.webp',
+      shortDescription: 'Experto en derecho laboral con amplia trayectoria en procedimientos administrativos.',
+      fullDescription: 'Experto en derecho laboral con amplia trayectoria en procedimientos administrativos y negociaciones colectivas. Especialista en derecho laboral y administrativo con reconocimiento en el sector público y privado.'
+    },
+    {
+      name: 'Dra. Ana Saquicela',
+      role: 'Socia',
+      specialty: 'Especialista en Derecho Constitucional y Penal',
+      image: '/dra-saquicela.jpg',
+      shortDescription: 'Abogada con visión humanista, comprometida con la defensa de los derechos fundamentales y la administración de justicia penal.',
+      fullDescription: 'La Dra. Ana Camila Saquicela se destaca por su sólida formación jurídica y su compromiso con la defensa de los derechos fundamentales. Abogada con una visión humanista del Derecho, ha orientado su carrera hacia la protección de las garantías constitucionales y la administración de justicia penal, actuando siempre con ética, firmeza y responsabilidad social.\n\n"La justicia no es un ideal lejano, sino el reflejo de nuestra determinación por hacer lo correcto."\n\nSu ejercicio profesional se distingue por la argumentación precisa, la sensibilidad ante las causas humanas y una profunda vocación de servicio. Cree en la justicia como un instrumento de transformación y equidad, buscando en cada caso no solo resolver conflictos, sino también restaurar la confianza en el Derecho.'
+    }
+  ]
+
+  return (
+    <div className="max-w-6xl mx-auto">
+      <div className="grid md:grid-cols-3 gap-8">
+        {lawyers.map((lawyer, index) => (
           <div 
-            className="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-slideUp"
-            onClick={(e) => e.stopPropagation()}
+            key={index} 
+            className={`group relative bg-slate-800 overflow-hidden shadow-xl rounded-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] cursor-pointer ${
+              expandedLawyer === index ? 'h-auto' : 'h-96'
+            }`}
+            onClick={() => setExpandedLawyer(expandedLawyer === index ? null : index)}
           >
-            <div className="relative h-96 bg-slate-800 flex items-center justify-center">
-              <img
-                src={selectedLawyer.image}
-                alt={selectedLawyer.name}
-                className="w-full h-full object-contain"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent pointer-events-none"></div>
-              <button
-                onClick={() => setSelectedLawyer(null)}
-                className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white rounded-full p-2 transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-              <div className="absolute bottom-6 left-6">
-                <p className="text-xs font-medium tracking-widest text-slate-300 uppercase mb-2">
-                  {selectedLawyer.specialty}
-                </p>
-                <h2 className="text-3xl font-serif font-bold text-white mb-1">
-                  {selectedLawyer.name}
-                </h2>
-                <p className="text-slate-200">
-                  {selectedLawyer.role}
-                </p>
-              </div>
-            </div>
-            <div className="p-8">
-              <div className="prose prose-slate max-w-none">
-                {selectedLawyer.fullDescription.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className={`text-slate-700 leading-relaxed mb-4 ${paragraph.startsWith('"') ? 'text-xl font-serif italic text-slate-600 border-l-4 border-slate-300 pl-4 my-6' : ''}`}>
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+            {/* Overlay gradient */}
+            <div className={`absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent transition-opacity duration-300 z-10 ${
+              expandedLawyer === index ? 'opacity-98' : 'opacity-80 group-hover:opacity-95'
+            }`}></div>
+            
+            <img
+              alt={lawyer.name}
+              src={lawyer.image}
+              className={`absolute inset-0 h-full w-full object-cover transition-transform duration-500 ${
+                expandedLawyer === index ? 'scale-105' : 'group-hover:scale-110'
+              }`}
+            />
+            
+            <div className="relative p-6 h-full flex flex-col justify-end z-20">
+              {/* Vista expandida (click) */}
+              {expandedLawyer === index ? (
+                <div className="animate-fadeIn">
+                  <div className="border-l-4 border-white/70 pl-4 pr-2">
+                    <p className="text-xs font-medium tracking-widest text-slate-300 uppercase mb-2">
+                      {lawyer.specialty}
+                    </p>
+                    <p className="text-2xl font-serif font-bold text-white mb-4">
+                      {lawyer.name}
+                    </p>
+                    <div className="text-sm text-slate-200 leading-relaxed space-y-3 max-h-96 overflow-y-auto pr-2">
+                      {lawyer.fullDescription.split('\n\n').map((paragraph, i) => (
+                        <p key={i} className={paragraph.startsWith('"') ? 'italic font-medium text-slate-100' : ''}>
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                    <button className="mt-4 text-xs text-slate-300 hover:text-white transition-colors">
+                      Cerrar ×
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {/* Información visible por defecto */}
+                  <div className="transition-all duration-300 group-hover:opacity-0 group-hover:translate-y-4">
+                    <p className="text-xs font-medium tracking-widest text-slate-200 uppercase mb-2">
+                      {lawyer.specialty}
+                    </p>
+                    <p className="text-2xl font-serif font-bold text-white mb-1">
+                      {lawyer.name}
+                    </p>
+                    <p className="text-sm text-slate-200 font-light">
+                      {lawyer.role}
+                    </p>
+                  </div>
+                  
+                  {/* Descripción corta visible en hover */}
+                  <div className="absolute bottom-6 left-6 right-6 translate-y-8 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                    <div className="border-l-4 border-white/70 pl-4 pr-2">
+                      <p className="text-xs font-medium tracking-widest text-slate-300 uppercase mb-2">
+                        {lawyer.specialty}
+                      </p>
+                      <p className="text-xl font-serif font-bold text-white mb-3">
+                        {lawyer.name}
+                      </p>
+                      <p className="text-sm text-slate-200 leading-relaxed">
+                        {lawyer.shortDescription}
+                      </p>
+                      <p className="text-xs text-slate-300 mt-3 italic">
+                        Click para ver más →
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
-        </div>
-      )}
-    </main>
+        ))}
+      </div>
+    </div>
   )
 }
