@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 export default function Home() {
   const [selectedLawyer, setSelectedLawyer] = useState<{
@@ -14,6 +14,27 @@ export default function Home() {
     fullDescription: string;
   } | null>(null)
 
+  // Hook para animaciones al scroll
+  useEffect(() => {
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(observerCallback, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    })
+
+    const elements = document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-scale')
+    elements.forEach(el => observer.observe(el))
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -24,8 +45,9 @@ export default function Home() {
           }}></div>
         </div>
         
-        {/* Imagen de la Dama de Justicia a la izquierda */}
-        <div className="absolute left-24 lg:left-28 top-0 bottom-0 w-64 lg:w-80 hidden md:flex items-center justify-start opacity-35 pointer-events-none">
+
+        {/* Desktop/Tablet: ambas damas a los lados */}
+        <div className="absolute left-20 lg:left-24 top-0 bottom-0 w-64 lg:w-80 hidden md:flex items-center justify-start opacity-35 pointer-events-none">
           <Image
             src="/dama-de-justicia.png"
             alt="Dama de Justicia"
@@ -35,8 +57,6 @@ export default function Home() {
             priority
           />
         </div>
-
-        {/* Imagen de la Dama de Justicia a la derecha */}
         <div className="absolute right-0 top-0 bottom-0 w-72 lg:w-96 hidden md:flex items-center justify-end opacity-35 pointer-events-none">
           <Image
             src="/dama-justicia-2.png"
@@ -68,6 +88,18 @@ export default function Home() {
             <p className="mt-8 text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
               Excelencia jurídica al servicio de nuestros clientes
             </p>
+
+            {/* Móvil: solo una dama centrada debajo del texto */}
+            <div className="flex md:hidden w-full justify-center items-center mt-12">
+              <Image
+                src="/dama-de-justicia.png"
+                alt="Dama de Justicia"
+                width={180}
+                height={400}
+                className="w-32 h-auto opacity-40"
+                priority
+              />
+            </div>
           </div>
         </div>
       </header>
@@ -100,14 +132,14 @@ export default function Home() {
       <section id="inicio" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-serif text-slate-800 mb-8">
+            <h2 className="text-4xl md:text-5xl font-serif text-slate-800 mb-8 scroll-animate">
               Comprometidos con la Justicia
             </h2>
-            <div className="w-24 h-1 bg-slate-700 mx-auto mb-8"></div>
-            <p className="text-lg text-slate-600 leading-relaxed mb-6">
+            <div className="w-24 h-1 bg-slate-700 mx-auto mb-8 scroll-animate-scale"></div>
+            <p className="text-lg text-slate-600 leading-relaxed mb-6 scroll-animate delay-100">
               Somos un bufete de abogados de reconocida trayectoria, especializados en brindar asesoría legal integral a personas naturales y jurídicas. Nuestro equipo de profesionales altamente calificados se distingue por su compromiso con la excelencia y la defensa rigurosa de los derechos de nuestros clientes.
             </p>
-            <p className="text-lg text-slate-600 leading-relaxed">
+            <p className="text-lg text-slate-600 leading-relaxed scroll-animate delay-200">
               Con años de experiencia en el ejercicio del derecho, ofrecemos soluciones jurídicas estratégicas adaptadas a las necesidades específicas de cada caso.
             </p>
           </div>
@@ -118,13 +150,13 @@ export default function Home() {
       <section id="nosotros" className="py-20 bg-slate-50">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-serif text-slate-800 mb-4 text-center">
+            <h2 className="text-4xl md:text-5xl font-serif text-slate-800 mb-4 text-center scroll-animate">
               Nuestra Firma
             </h2>
-            <div className="w-24 h-1 bg-slate-700 mx-auto mb-12"></div>
+            <div className="w-24 h-1 bg-slate-700 mx-auto mb-12 scroll-animate-scale"></div>
             
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
+              <div className="scroll-animate-left">
                 <p className="text-slate-600 leading-relaxed mb-6">
                   Jara, Alarcón & Saquicela Asociados fue fundada con la visión de crear una firma legal que combine la tradición jurídica con enfoques innovadores y eficientes. Nuestra práctica se fundamenta en valores sólidos de integridad, profesionalismo y resultados.
                 </p>
@@ -135,7 +167,7 @@ export default function Home() {
                   Cada miembro de nuestro equipo está comprometido con la excelencia académica y profesional, manteniendo una actualización constante en las últimas tendencias legales y jurisprudenciales.
                 </p>
               </div>
-              <div className="bg-white p-8 shadow-lg border border-slate-200">
+              <div className="bg-white p-8 shadow-lg border border-slate-200 scroll-animate-right">
                 <h3 className="text-2xl font-serif text-slate-800 mb-6">Nuestros Principios</h3>
                 <ul className="space-y-4">
                   <li className="flex items-start">
@@ -176,10 +208,10 @@ export default function Home() {
       {/* Services */}
       <section id="servicios" className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-serif text-slate-800 mb-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-serif text-slate-800 mb-4 text-center scroll-animate">
             Áreas de Práctica
           </h2>
-          <div className="w-24 h-1 bg-slate-700 mx-auto mb-12"></div>
+          <div className="w-24 h-1 bg-slate-700 mx-auto mb-12 scroll-animate-scale"></div>
           
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
@@ -199,7 +231,7 @@ export default function Home() {
                 featured: true
               }
             ].map((service, index) => (
-              <div key={index} className={`bg-slate-50 border-l-4 border-slate-700 p-6 hover:shadow-lg transition-shadow duration-300 relative overflow-hidden`}>
+              <div key={index} className={`bg-slate-50 border-l-4 border-slate-700 p-6 hover:shadow-lg transition-shadow duration-300 relative overflow-hidden scroll-animate delay-${index + 1}00`}>
                 <div className="absolute right-0 top-0 opacity-10 pointer-events-none">
                   {index === 0 && (
                     // Ácono de Derecho Civil: Documento/Contrato con pluma
@@ -237,10 +269,10 @@ export default function Home() {
       {/* Team Carousel */}
       <section id="equipo" className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-serif text-slate-800 mb-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-serif text-slate-800 mb-4 text-center scroll-animate">
             Nuestro Equipo
           </h2>
-          <div className="w-24 h-1 bg-slate-700 mx-auto mb-12"></div>
+          <div className="w-24 h-1 bg-slate-700 mx-auto mb-12 scroll-animate-scale"></div>
           
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-3 gap-8">
@@ -275,7 +307,7 @@ export default function Home() {
               ].map((lawyer, index) => (
                 <div 
                   key={index} 
-                  className="group relative bg-slate-800 overflow-hidden shadow-xl h-96 rounded-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] cursor-pointer"
+                  className={`group relative bg-slate-800 overflow-hidden shadow-xl h-96 rounded-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] cursor-pointer scroll-animate delay-${index + 1}00`}
                   onClick={() => setSelectedLawyer(lawyer)}
                 >
                   {/* Overlay gradient que se intensifica en hover */}
@@ -327,18 +359,18 @@ export default function Home() {
       {/* Contact */}
       <section id="contacto" className="py-20 bg-slate-800 text-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-serif mb-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-serif mb-4 text-center scroll-animate">
             Contacto
           </h2>
-          <div className="w-24 h-1 bg-white mx-auto mb-12"></div>
+          <div className="w-24 h-1 bg-white mx-auto mb-12 scroll-animate-scale"></div>
           
           <div className="max-w-4xl mx-auto">
-            <p className="text-center text-slate-300 mb-12 text-lg">
+            <p className="text-center text-slate-300 mb-12 text-lg scroll-animate">
               Estamos a su disposición para atender sus consultas legales. Contáctenos para una evaluación inicial de su caso.
             </p>
             
             <div className="grid md:grid-cols-3 gap-8 mb-12">
-              <div className="text-center">
+              <div className="text-center scroll-animate delay-100">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-700 rounded-full mb-4">
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -349,7 +381,7 @@ export default function Home() {
                 <p className="text-slate-300">Av. González Suárez N45-123<br />Edificio Platinum, Piso 10<br />Quito, Ecuador</p>
               </div>
               
-              <div className="text-center">
+              <div className="text-center scroll-animate delay-200">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-700 rounded-full mb-4">
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -359,7 +391,7 @@ export default function Home() {
                 <p className="text-slate-300">+593 2 2345-678<br />+593 99 123 4567</p>
               </div>
               
-              <div className="text-center">
+              <div className="text-center scroll-animate delay-300">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-700 rounded-full mb-4">
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -375,7 +407,7 @@ export default function Home() {
                 href="https://wa.me/593996766136?text=Hola,%20me%20gustaría%20solicitar%20una%20consulta%20legal" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-white text-slate-800 px-8 py-3 font-semibold hover:bg-slate-100 transition-colors duration-200"
+                className="inline-block bg-white text-slate-800 px-8 py-3 font-semibold hover:bg-slate-100 transition-colors duration-200 scroll-animate delay-400"
               >
                 Solicitar Consulta
               </a>
